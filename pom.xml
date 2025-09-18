@@ -31,6 +31,17 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.1.2</version>
             </plugin>
+
+            <!-- Plugin para rodar a classe Main -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <mainClass>puzzle.app.Main</mainClass>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+
 </project>

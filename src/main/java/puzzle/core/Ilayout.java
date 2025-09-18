@@ -2,14 +2,18 @@ package puzzle.core;
 
 import java.util.List;
 
-// Interface que define o contrato para qualquer "estado" do puzzle
+/**
+ * Interface que representa o contrato para qualquer problema
+ * que possa ser resolvido pelo algoritmo Best-First.
+ */
 public interface Ilayout {
-    // Gera os filhos (novos estados possíveis a partir do atual)
+
+    // Função de como gerar sucessores
     List<Ilayout> children();
 
-    // Verifica se este estado é igual ao objetivo
+    // Função para verificar se chegou ao objetivo
     boolean isGoal(Ilayout l);
 
-    // Retorna o custo de mover do estado atual para o próximo
+    // Função para saber qual o custo de transição
     double getK();
 }

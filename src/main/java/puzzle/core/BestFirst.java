@@ -7,6 +7,7 @@ import java.util.*;
  */
 public class BestFirst {
     protected Queue<State> abertos;        // estados ainda não testados
+    private Set<Ilayout> emAberto;        // layouts que já estão na fila
     private Map<Ilayout, State> fechados; // estados já testados
     private State actual;                  // estado atual
     private Ilayout objective;             // estado objetivo
@@ -71,14 +72,18 @@ public class BestFirst {
         // Fila de prioridade (ordena pelo custo acumulado g)
         abertos = new PriorityQueue<>(10,
                 (s1, s2) -> (int) Math.signum(s1.getG() - s2.getG()));
+        emAberto = new HashSet<>();
         fechados = new HashMap<>();
 
         // Insere o estado inicial
-        abertos.add(new State(s, null));
+        State inicial = new State(s, null);
+        abertos.add(inicial);
+        emAberto.add(inicial.layout);
 
         while (!abertos.isEmpty()) {
             // Pega o estado de menor custo
             actual = abertos.poll();
+            emAberto.remove(actual.layout);
 
             // Se atingiu o objetivo → reconstrói caminho
             if (actual.layout.isGoal(objective)) {
@@ -90,8 +95,9 @@ public class BestFirst {
             List<State> sucs = sucessores(actual);
 
             for (State st : sucs) {
-                if (!fechados.containsKey(st.layout) && !abertos.contains(st)) {
+                if (!fechados.containsKey(st.layout) && !emAberto.contains(st.layout)) {
                     abertos.add(st);
+                    emAberto.add(st.layout);
                 }
             }
         }

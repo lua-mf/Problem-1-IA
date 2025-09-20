@@ -59,7 +59,7 @@ public class BestFirstTests {
         // A lógica de formatação do Board depende da sua implementação
         assertEquals(goal, new Board(last.toString().replace("\n", "").replace(" ", "0")), "O estado final deve ser o objetivo.");
         assertEquals(12.0, last.getG(), "O custo total deve ser 12.0.");
-        assertEquals(13, steps, "Deve haver 5 estados no caminho.");
+        assertEquals(13, steps, "Deve haver 13 estados no caminho.");
     }
 
     @Test
@@ -95,4 +95,24 @@ public class BestFirstTests {
 
         assertNull(solution, "A solução deve ser nula para um quebra-cabeça irresolúvel.");
     }
+
+    @Test
+    public void testLongerPathPuzzle() {
+        Ilayout initial = new Board("281043765"); // mais embaralhado
+        Ilayout goal = new Board("123405678");
+
+        BestFirst solver = new BestFirst();
+        Iterator<BestFirst.State> solution = solver.solve(initial, goal);
+
+        assertNotNull(solution, "Solução não deveria ser nula");
+
+        int steps = 0;
+        while (solution.hasNext()) {
+            solution.next();
+            steps++;
+        }
+
+        assertTrue(steps > 10, "Deveria levar mais de 10 passos para resolver");
+    }
+
 }

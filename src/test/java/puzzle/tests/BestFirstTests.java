@@ -83,22 +83,23 @@ public class BestFirstTests {
         assertEquals(0.0, last.getG(), "Custo deve ser 0.0");
         System.out.println("Teste 'testAlreadySolvedPuzzle' concluído com sucesso!");
     }
-    
+
     @Test
     public void testUnsolvablePuzzle() {
-        // Exemplo de um estado irresolúvel para o quebra-cabeça 8-puzzle
-        Ilayout initial = new Board("812043765");
+        Ilayout initial = new Board("812043765"); // insolúvel
         Ilayout goal = new Board("123456780");
 
         BestFirst solver = new BestFirst();
-        Iterator<BestFirst.State> solution = solver.solve(initial, goal);
 
-        assertNull(solution, "A solução deve ser nula para um quebra-cabeça irresolúvel.");
+        assertThrows(IllegalStateException.class, () -> {
+            solver.solve(initial, goal);
+        }, "Um puzzle insolúvel deve lançar exceção.");
     }
+
 
     @Test
     public void testLongerPathPuzzle() {
-        Ilayout initial = new Board("281043765"); // mais embaralhado
+        Ilayout initial = new Board("724506831"); // embaralhamento solúvel
         Ilayout goal = new Board("123405678");
 
         BestFirst solver = new BestFirst();
@@ -114,5 +115,6 @@ public class BestFirstTests {
 
         assertTrue(steps > 10, "Deveria levar mais de 10 passos para resolver");
     }
+
 
 }

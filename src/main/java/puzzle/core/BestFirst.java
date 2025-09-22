@@ -103,7 +103,8 @@ public class BestFirst {
         }
 
         // Se não encontrou solução
-        return null;
+        throw new IllegalStateException("Puzzle não tem solução.");
+
     }
 
     // Reconstrói o caminho da solução do estado inicial até o objetivo
